@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenWeatherMap Frontend</title>
+    
+    <style>
+        /* 1. Global Reset and Background */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e6e9f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* 2. Main Card Container */
+        .weather-card {
+            background: linear-gradient(145deg, #1e90ff, #00bfff); 
+            color: white;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            width: 320px;
+            text-align: center;
+        }
+
+        /* 3. Search and Input (Kept for user interaction) */
+        .search-area {
+            margin-bottom: 25px;
+        }
+        .search-area input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            color: #333;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 4. Location and Date */
+        .city-name {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .date {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        /* 5. Icon and Temperature Group */
+        .current-temp-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .weather-icon {
+            font-size: 5em;
+            margin-right: 15px;
+            line-height: 1;
+        }
+        .temperature {
+            font-size: 5.5em;
+            font-weight: 200;
+        }
+        .unit {
+            font-size: 0.25em;
+            vertical-align: super;
+            display: inline-block;
+            margin-top: -30px;
+        }
+
+        /* 6. Description (from 'weather[0].description') */
+        .description {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+
+        /* 7. Detailed Metrics */
+        .details-grid {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 15px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .detail-item {
+            text-align: center;
+            flex-grow: 1;
+        }
+        .detail-item p {
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .detail-item small {
+            font-size: 0.7em;
+            opacity: 0.7;
+            display: block;
+        }
+        .detail-item:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="weather-card">
+        
+        <div class="search-area">
+    
+    <form method="post" action="">
+        
+        {% csrf_token %} 
+        
+        <div class="input-group">
+            <input type="text" 
+                   class="form-control" 
+                   name="city" 
+                   placeholder="Enter City Name..." 
+                   id="city-input">
+            
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search">🔍</i>
+                </button>
+            </div>
+        </div>
+        
+    </form>
+    </div>
+
+        <div class="location-info">
+            <div class="city-name" id="city-name-display">**{{ city_name }}**</div>
+            
+        </div>
+
+        <
+            
+            <div class="temperature" id="temp-display">
+                **{{ main_temp }}**
+                <span class="unit">°C</span>
+            </div>
+        </div>
+
+        
+
+        <div class="details-grid">
+            
+            <div class="detail-item">
+                <p id="humidity-display">**{{ current_humidity }}**</p>
+                <small>Humidity</small>
+            </div>
+            
+            <div class="detail-item">
+                <p id="wind-speed-display">**{{ current_wind_speed }}**</p>
+                <small>Wind Speed</small>
+            </div>
+            
+            <div class="detail-item">
+                <p id="feels-like-display">**{{ current_feels_like }}**</p>
+                <small>Feels Like</small>
+            </div>
+        </div>
+        
+    </div>
